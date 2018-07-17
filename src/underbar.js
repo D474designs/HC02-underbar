@@ -240,18 +240,40 @@ return nonDups;
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
 
-    var isAccumulatorUndefined = arguments.length === 2;
+    var newArr = [];
+    for (var i = 0; i < collection.length; i++) {
+      if (!accumulator) {
+        accumulator = iterator(collection[i], 0);
+      } else { accumulator = iterator(accumulator, collection[i]);
+      }
+    }
+    return accumulator;
+    //return newArr.push(collection[i]);
+  };
 
-_.each(collection, function(value) {
-  if (isAccumulatorUndefined) {
-    accumulator = value
-    isAccumulatorUndefined = false;
-  } else {
-    accumulator = iterator(accumulator, value)
-  }
-})
+  //   for (var i = 0; i < collection.length; i++) {
+  //     if (collection.length < 2) {
+  //       return collection[i];
+  //     } else {
+  //       accumulator += iterator(collection[i]);
+  //     }
+  //   }
+  //   return accumulator;
+  // };
 
-return accumulator;
+//     var isAccumulatorUndefined = arguments.length === 2;
+//
+// _.each(collection, function(value) {
+//   if (isAccumulatorUndefined) {
+//     accumulator = value
+//     isAccumulatorUndefined = false;
+//   } else {
+//     accumulator = iterator(accumulator, value)
+//   }
+// })
+//
+// return accumulator;
+// };
 
   //   return _.reduce(collection, function(wasFound, item) {
   //   if (wasFound) {
@@ -263,7 +285,7 @@ return accumulator;
     // for (var i = 0; i < 0; i++) {
     //   return accumulator += iterator(collection[i]);
     // }
-  };
+  //};
 
   // Determine if the array or object contains a given value (using `===`).
   _.contains = function(collection, target) {
