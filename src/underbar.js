@@ -108,13 +108,20 @@
   // Return all elements of an array that pass a truth test.
 
   _.filter = function(collection, test) {
-  var newArr = [];
-  for(var i = 0; i < collection.length; i++) {
-    if (test(collection[i])) {
-      newArr.push(collection[i]);
-    }
-  }
-  return newArr;
+    var result = [];
+    _.each(collection, function(item) {
+      if (test(item)) {
+        result.push(item);
+      }
+    });
+    return result;
+  // var newArr = [];
+  // for(var i = 0; i < collection.length; i++) {
+  //   if (test(collection[i])) {
+  //     newArr.push(collection[i]);
+  //   }
+  // }
+  // return newArr;
 };
 
   // _.filter = function(collection, test) {
@@ -131,9 +138,18 @@
   _.reject = function(collection, test) {
   // TIP: see if you can re-use _.filter() here, without simply
   // copying code in and modifying it
-    return _.filter(collection, function(x) {
-       return test(x) === false;
+
+    // return _.filter(collection, function(x) {
+    //    return test(x) === false;
+    // });
+
+    var result = [];
+    _.each(collection, function(item) {
+      if (!test(item)) {
+        result.push(item);
+      }
     });
+    return result;
 };
   // _.reject = function(collection, test) {
   //   var newArr = [];
@@ -150,7 +166,7 @@
 
 //     var newArray = [];
 // var mySet = new Set();
-// for(var i = 0; i < array.length; i ++){
+// for(var i = 0; i < array.length; i++){
 // mySet.add(array[i]);
 // }
 // mySet.forEach(function(value){
@@ -158,23 +174,23 @@
 // });
 // return newArray;
 
-    var nonDups = [];
-for(var i = 0; i < array.length; i++) {
-  if (!nonDups.includes(array[i])) {
-    nonDups.push(array[i]);
-  }
-}
-return nonDups;
+//     var nonDups = [];
+// for(var i = 0; i < array.length; i++) {
+//   if (!nonDups.includes(array[i])) {
+//     nonDups.push(array[i]);
+//   }
+// }
+// return nonDups;
 
-  //   var newArr = [];
-  //   var obj = {};
-  //   for (var i = 0; i < array.length; i++) {
-  //     if (obj[array[i]] === undefined) {
-  //       obj[array[i]] += 1;
-  //       newArr.push(array[i]);
-  //     }
-  //   }
-  //   return newArr;
+    var newArr = [];
+    var obj = {};
+    for (var i = 0; i < array.length; i++) {
+      if (obj[array[i]] === undefined) {
+        obj[array[i]] += 1;
+        newArr.push(array[i]);
+      }
+    }
+    return newArr;
   };
 
 
@@ -240,7 +256,6 @@ return nonDups;
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
 
-    var newArr = [];
     for (var i = 0; i < collection.length; i++) {
       if (!accumulator) {
         accumulator = iterator(collection[i], 0);
@@ -248,6 +263,7 @@ return nonDups;
       }
     }
     return accumulator;
+    //var newArr = [];
     //return newArr.push(collection[i]);
   };
 
