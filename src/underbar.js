@@ -256,16 +256,26 @@
   //          No accumulator is given so the first element is used.
   _.reduce = function(collection, iterator, accumulator) {
 
-    for (var i = 0; i < collection.length; i++) {
-      if (!accumulator) {
-        accumulator = iterator(collection[i], 0);
-      } else { accumulator = iterator(accumulator, collection[i]);
-      }
-    }
-    return accumulator;
+    // for (var i = 0; i < collection.length; i++) {
+    //   if (!accumulator) {
+    //     accumulator = iterator(collection[i], 0);
+    //   } else { accumulator = iterator(accumulator, collection[i]);
+    //   }
+    // }
+    // return accumulator;
+
+    // for (var i = 0; i < collection.length; i += 1) {
+    //   if (accumulator !== undefined) {
+    //     accumulator = (iterator(accumulator, collection[i]));
+    //   } else {
+    //     accumulator = (iterator(collection[i], 0));
+    //   }
+    // }
+    // return accumulator;
+
     //var newArr = [];
     //return newArr.push(collection[i]);
-  };
+  // };
 
   //   for (var i = 0; i < collection.length; i++) {
   //     if (collection.length < 2) {
@@ -277,19 +287,19 @@
   //   return accumulator;
   // };
 
-//     var isAccumulatorUndefined = arguments.length === 2;
-//
-// _.each(collection, function(value) {
-//   if (isAccumulatorUndefined) {
-//     accumulator = value
-//     isAccumulatorUndefined = false;
-//   } else {
-//     accumulator = iterator(accumulator, value)
-//   }
-// })
-//
-// return accumulator;
-// };
+    var isAccumulatorUndefined = arguments.length === 2;
+
+_.each(collection, function(value) {
+  if (isAccumulatorUndefined) {
+    accumulator = value
+    isAccumulatorUndefined = false;
+  } else {
+    accumulator = iterator(accumulator, value)
+  }
+})
+
+return accumulator;
+};
 
   //   return _.reduce(collection, function(wasFound, item) {
   //   if (wasFound) {
@@ -313,18 +323,83 @@
       }
       return item === target;
     }, false);
+
+//     if (Array.isArray(collection)) {
+//   return _.reduce(collection, function(wasFound, item) {
+//     if (wasFound) {
+//       return true;
+//     }
+//     return item === target;
+//   }, false);
+// } else {
+//   for (var key in collection) {
+//     if (collection[key] === target) {
+//       return true;
+//     } else {
+//       return false;
+//     }
+//   }
+// }
+
   };
 
 
   // Determine whether all of the elements match a truth test.
   _.every = function(collection, iterator) {
     // TIP: Try re-using reduce() here.
+    if (iterator === undefined) {
+      return collection[collection.length-1];
+    }
+    return _.reduce(collection , function(acc, item) {
+      if (!acc) {
+        return false;
+      }
+      if(iterator(item)) {
+        return true;
+      }
+      return false;
+    }, true);
   };
 
   // Determine whether any of the elements pass a truth test. If no iterator is
   // provided, provide a default one
   _.some = function(collection, iterator) {
     // TIP: There's a very clever way to re-use every() here.
+
+    if(iterator === undefined){
+      return _.contains(collection, true);
+      }
+    return !_.every(collection, function(item) {
+    if (iterator(item)) {
+      return false;
+    } else {
+      return true;
+      }
+    });
+
+  //   if(iterator === undefined){
+  //     return _.contains(collection, true);
+  //   }
+  //   if( _.every(collection, iterator)){
+  //     return true;
+  //   }
+  //   return _.reduce(collection, function(acc, item){
+  //   if (acc) {
+  //     return true;
+  //   }
+  //   if(iterator(item)) {
+  //     return true;
+  //   }
+  //   if(!iterator(item)){
+  //     return false;
+  //   }
+  // }, false);
+
+    // if (!iterator) {
+    //   iterator = _.contains(collection, true);
+    // } else {
+    //   return _.every(collection, iterator);
+    // }
   };
 
 
@@ -347,6 +422,16 @@
   //     bla: "even more stuff"
   //   }); // obj1 now contains key1, key2, key3 and bla
   _.extend = function(obj) {
+
+    // // var extendedObj = {};
+    // for (var i = 1; i = arguments.length; i++) {
+    //   for (var key in arguments[i]) {
+    //     arguments[0][key] = arguments[i][key];
+    //     //extendedObj[key] = obj[key];
+    //   }
+    // }
+    // return obj;
+
   };
 
   // Like extend, but doesn't ever overwrite a key that already
@@ -395,6 +480,18 @@
   // already computed the result for the given argument and return that value
   // instead if possible.
   _.memoize = function(func) {
+
+    // var obj = {};
+    // return function(){
+    //   var test = Array.prototype.slice.call(arguments)
+    //   if(test in obj){
+    //     return obj[test];
+    //   }else{
+    //     obj[test] = func.apply(this, arguments);
+    //     return obj[test];
+    //   }
+    // }
+
   };
 
   // Delays a function for the given number of milliseconds, and then calls
@@ -404,6 +501,12 @@
   // parameter. For example _.delay(someFunction, 500, 'a', 'b') will
   // call someFunction('a', 'b') after 500ms
   _.delay = function(func, wait) {
+
+    setTimeout(func, wait);
+
+
+    // setTimeout(function() { your_func(); }, 5000);
+
   };
 
 
